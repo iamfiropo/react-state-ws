@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import TodoList from './component/todo-list/todo-list.component';
-import AddTask from './component/add-task/add-task.component';
+import TodoList from "./component/todo-list/todo-list.component";
+import AddTask from "./component/add-task/add-task.component";
 
 class App extends Component {
   state = {
@@ -25,16 +25,19 @@ class App extends Component {
     ],
   };
 
-  addTask = (task) => this.setState({ tasks: [...this.state.tasks, task] });
-  doneTask = (id) =>
+
+  handleAdd = (task) => this.setState({ tasks: [...this.state.tasks, task] });
+  
+  handleDone = (id) => {  
     this.setState({
       tasks: this.state.tasks.map((task) =>
         task.id === id ? { ...task, done: !task.done } : task
       ),
-    });
-  deleteTask = (id) =>
+    })};
+
+    handleDelete = (id) =>
     this.setState({
-      tasks: this.state.tasks.filter((element) => element.id !== id),
+      tasks: this.state.tasks.filter((task) => task.id !== id),
     });
 
   render() {
@@ -43,12 +46,12 @@ class App extends Component {
         <div className="row justify-content-center">
           <h1>Here is a list of what you should do</h1>
         </div>
-        <TodoList 
+        <TodoList
           todos={this.state.tasks}
-          handleDelete={this.deleteTask}
-          handleDone={this.doneTask}
+          handleDelete={this.handleDelete}
+          handleDone={this.handleDone}
         />
-        <AddTask handleAdd={this.addTask} />
+        <AddTask length={this.state.tasks.length} handleAdd={this.handleAdd} />
       </div>
     );
   }

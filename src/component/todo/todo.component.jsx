@@ -1,22 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "./todo.style.css";
 import DeleteImage from "../../assets/delete.png";
 import DoneImage from "../../assets/done.png";
 
-const Todo = (props) => {
+import "./todo.style.css";
+
+const Todo = ({ task, handleDone, handleDelete }) => {
   return (
     <div className="row">
       <div className="col-md-8">
-        <span className={props.task.done ? "done" : "un-done"}>{props.task.description}</span>
+        <span className={task.done ? "done" : "un-done"}>{task.description}</span>
       </div>
       <div className="col-md-1 justify-content-center">
         <img
           style={{ width: `25px` }}
           src={DoneImage}
           alt="done"
-          onClick={() => props.handleDone(props.task.id)}
+          onClick={() => handleDone(task.id)}
         />
       </div>
       <div className="col-md-1 justify-content-center">
@@ -24,7 +25,7 @@ const Todo = (props) => {
           style={{ width: `25px` }}
           src={DeleteImage}
           alt="edit"
-          onClick={() => props.handleDelete(props.task.id)}
+          onClick={() => handleDelete(task.id)}
         />
       </div>
     </div>
@@ -33,7 +34,7 @@ const Todo = (props) => {
 
 Todo.propTypes = {
   description: PropTypes.string,
-  id: PropTypes.string,
+  id: PropTypes.number,
   done: PropTypes.bool,
 };
 

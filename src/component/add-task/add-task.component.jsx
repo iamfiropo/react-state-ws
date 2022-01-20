@@ -7,14 +7,27 @@ class AddTask extends Component {
   state = {
     desc: "",
   };
+
+  handleChange = (event) => {
+    this.setState({ desc: event.target.value })
+  }
+
   render() {
+    const { length, handleAdd } = this.props;
+
+    const task = {
+      id: length + 1,
+      description: this.state.desc,
+      done: false,
+    };
+    
     return (
       <div className="row mt-3">
         <div className="col-md-10">
           <input
             className="form-control"
             type="text"
-            onChange={(event) => this.setState({ desc: event.target.value })}
+            onChange={(event) => this.handleChange(event)}
           />
         </div>
 
@@ -23,13 +36,7 @@ class AddTask extends Component {
             style={{ width: `30px` }}
             src={AddImage}
             alt="add"
-            onClick={() =>
-              this.props.handleAdd({
-                id: Date.now(),
-                description: this.state.desc,
-                done: false,
-              })
-            }
+            onClick={() => handleAdd(task)}
           />
         </div>
       </div>
@@ -38,6 +45,7 @@ class AddTask extends Component {
 }
 
 AddTask.propTypes = {
+  length: PropTypes.number,
   handleAdd: PropTypes.func,
 };
 
